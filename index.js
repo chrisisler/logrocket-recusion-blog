@@ -20,6 +20,7 @@ const first = list => list[0]
 
 const rest = list => list.slice(1)
 
+
 // "return true if it finds a match, otherwise false"
 function includes(item, list) {
   if (isEmpty(list)) {
@@ -46,6 +47,12 @@ function includes(item, list) {
     }
   }
 }
+// Rewriting `includes` with wavematch: github.com/chrisisler/wavematch
+const _includes = wavematch.create(
+  (_, list = []) => false,
+  (item, list = Array) => includes(item, first(list)) || includes(item, rest(list)),
+  (item, list) => first(list) == item || includes(item, rest(list))
+)
 
 const concat = Function.call.bind(Array.prototype.concat)
 
